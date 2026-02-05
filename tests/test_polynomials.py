@@ -53,3 +53,18 @@ def test_mul_polynomial():
 
     d = b * a
     assert c.coeffs == d.coeffs
+
+def test_polinomial_zero():
+    a = Polynomial.zero()
+    assert all(i == 0 for i in a.coeffs)
+
+def test_polinomial_one():
+    a = Polynomial.one()
+    assert a.coeffs[0] == 1
+    assert all(i == 0 for i in a.coeffs[1:])
+
+def test_polinomial_one_mul():
+    a = Polynomial.one() * 2
+    assert a.coeffs[0] == 2
+    assert all(i == 0 for i in a.coeffs[1:])
+
