@@ -1,4 +1,5 @@
-from hashlib import shake_128, shake_256
+from hashlib import shake_128, shake_256, sha3_512
+import secrets
 from pyber.params import ETA, N, Q
 
 first_number_mask = int("0" * 12 + "1"*12, 2)
@@ -53,3 +54,15 @@ def generate_noise(seed: bytes, nonce: int, eta: int = 2) -> list[int]:
         coeffs.append(d2)
         
     return coeffs
+
+def g_hash_function(data: None|bytes=None) -> tuple[bytes, bytes]:
+    """
+    Expands a 32-byte seed into two 32-byte seeds (rho, sigma).
+    Uses SHA3-512.
+    """
+    if not data:
+        data = secrets.token_bytes(32)
+    if len(data) != 32:
+        raise Exception("Must be 256 bits long")
+    digest = sha3_512(data).digest()
+    return digest[:32], digest[32:]

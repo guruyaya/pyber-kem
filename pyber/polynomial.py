@@ -53,3 +53,5 @@ class Polynomial:
     def random_noise(cls, seed, nonce):
         return cls(generate_noise(seed, nonce))
         
+    def __str__(self):
+        return f"<Polynomial ({self.coeffs})>"
