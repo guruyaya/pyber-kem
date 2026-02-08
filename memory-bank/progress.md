@@ -1,7 +1,7 @@
 # Progress
 
 This file tracks the project's progress using a task list format.
-2026-02-05 08:51:00 - Log of updates made.
+2026-02-07 21:20:00 - Randomness tasks completed.
 
 *
 
@@ -13,13 +13,18 @@ This file tracks the project's progress using a task list format.
 * [x] 2026-02-04 13:30:00 - Implemented Polynomial Addition and Subtraction.
 * [x] 2026-02-04 13:30:00 - Implemented Polynomial Multiplication (Naive $O(n^2)$) verified with robust corner-case tests.
 * [x] 2026-02-05 01:27:00 - Implemented Matrix-Vector Multiplication (`mat_vec_mul`) correctly handling row-vector products.
+* [x] 2026-02-07 21:20:00 - Implemented Randomness Module:
+    *   `generate_uniform`: SHAKE-128 + Rejection Sampling.
+    *   `generate_noise`: SHAKE-256 + CBD (ETA=2).
+    *   Integrated into `Polynomial` class as factory methods.
 
 ## Current Tasks
 
-* Implement Random Polynomial Generation:
-    * `random_uniform()`: For matrix $A$.
-    * `random_small()`: For secrets $\mathbf{s}, \mathbf{e}$ (using simple random for now, later CBD).
-* Implement Key Generation: Combine Matrix * Vector + Noise.
+* Implement Key Generation:
+    *   Generate Matrix $A$ (using `random_uniform`).
+    *   Generate Secrets $s, e$ (using `random_noise`).
+    *   Compute $t = A \cdot s + e$.
+    *   Pack keys into bytes.
 
 ## Next Steps
 
