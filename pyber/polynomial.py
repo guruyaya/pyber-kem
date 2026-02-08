@@ -1,5 +1,6 @@
 from typing import Self
 from .params import N, Q
+from .randomness import generate_uniform, generate_noise
 class Polynomial:
     coeffs: list
 
@@ -14,7 +15,7 @@ class Polynomial:
     def __sub__(self, other: Self) -> Self:
         return Polynomial([a - b for a, b in zip(self.coeffs, other.coeffs)])
     
-    def _multiply_polinomial(self, other: Self):
+    def _multiply_polynomial(self, other: Self):
         out = [0 for _ in range(N)]
         for i, co1 in enumerate(self.coeffs):
             for j, co2 in enumerate(other.coeffs):
@@ -31,7 +32,7 @@ class Polynomial:
     def __mul__(self, other: Self|int) -> Self:
         if isinstance(other, int):
             return Polynomial([cof * other for cof in self.coeffs])
-        return self._multiply_polinomial(other=other)
+        return self._multiply_polynomial(other=other)
     
     @classmethod
     def zero(cls) -> Self:
@@ -40,4 +41,12 @@ class Polynomial:
     @classmethod
     def one(cls) -> Self:
         return cls([1] + [0] * (N - 1))
+    
+    @classmethod
+    def random_uniform(cls, seed):
+        return cls(generate_uniform(seed))
+
+    @classmethod
+    def random_noise(cls, seed, nonce):
+        return cls(generate_noise(seed, nonce))
         

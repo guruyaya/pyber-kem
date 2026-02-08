@@ -1,7 +1,6 @@
 from hashlib import shake_128, shake_256
 from pyber.params import ETA, N, Q
 
-
 first_number_mask = int("0" * 12 + "1"*12, 2)
 
 def get_2_numbers(provided_bytes: bytes) -> tuple[int, int]:
