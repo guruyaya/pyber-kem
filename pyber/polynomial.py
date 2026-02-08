@@ -34,6 +34,9 @@ class Polynomial:
             return Polynomial([cof * other for cof in self.coeffs])
         return self._multiply_polynomial(other=other)
     
+    def __eq__(self, value: Self):
+        return len(self.coeffs) == len(value.coeffs) and all(a == b for a, b in zip(self.coeffs, value.coeffs))
+    
     @classmethod
     def zero(cls) -> Self:
         return cls([0] * N)
