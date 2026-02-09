@@ -46,12 +46,18 @@ class Polynomial:
         return cls([1] + [0] * (N - 1))
     
     @classmethod
-    def random_uniform(cls, seed):
+    def random_uniform(cls, seed) -> Self:
         return cls(generate_uniform(seed))
 
     @classmethod
-    def random_noise(cls, seed, nonce):
+    def random_noise(cls, seed, nonce) -> Self:
         return cls(generate_noise(seed, nonce))
         
     def __str__(self):
         return f"<Polynomial ({self.coeffs})>"
+        
+    def __iter__(self) -> iter:
+        return iter(self.coeffs)
+    
+    def __len__(self) -> int:
+        return len(self.coeffs)
