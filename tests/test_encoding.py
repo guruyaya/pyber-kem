@@ -1,5 +1,5 @@
 import pytest
-from pyber.encoding import encode_12, decode_12, encode_polynom
+from pyber.encoding import decode_polynom, encode_12, decode_12, encode_polynom
 from pyber.params import N
 from pyber.polynomial import Polynomial
 
@@ -52,3 +52,9 @@ def test_encode_polynom():
 
     encoded = encode_polynom(polynom)
     assert len(encoded) == (N * 3) / 2
+
+    assert encode_12(polynom.coeffs[2], polynom.coeffs[3]) == tuple(encoded[3:6])
+
+def test_enocde_deocde_polynom_round_trip():
+    polynom = Polynomial(list(range(N)))
+    assert decode_polynom(encode_polynom(polynom)) == polynom

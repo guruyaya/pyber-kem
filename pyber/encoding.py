@@ -32,3 +32,9 @@ def encode_polynom(polynom: Polynomial) -> list[int]:
         out += list(encode_12(num1, num2))
     
     return out
+
+def decode_polynom(encoded: list[int]) -> Polynomial:
+    coeffs = []
+    for params in windowed(encoded, 3, step=3):
+        coeffs += list(decode_12(*params))
+    return Polynomial(coeffs)
