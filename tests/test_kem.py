@@ -1,5 +1,6 @@
+import secrets
 import pytest
-from pyber.kem import expand_matrix, generate_keys, modular_distance
+from pyber.kem import encapes, expand_matrix, generate_keys, modular_distance
 from pyber.matrix import mat_vec_mul
 from pyber.params import ETA, K, Q
 from pyber.polynomial import Polynomial
@@ -23,8 +24,10 @@ def test_key_key_generation_different_seeds():
 
 def test_key_generation():
     seed = b'The_secret_is_cool_2201119292934'
-    (t1, rho1), secret1 = generate_keys(seed)
-    (t2, rho2), secret2 = generate_keys(seed)
+    pk1, secret1 = generate_keys(seed)
+    (t1, rho1) = pk1.to_tuple()
+    pk2, secret2 = generate_keys(seed)
+    (t2, rho2) = pk2.to_tuple()
 
     assert t1 == t2
     assert rho1 == rho2
@@ -40,10 +43,12 @@ def test_key_generation():
 def test_key_generation_diffrent_seeds():
     seed1 = b'The_secret_is_cool_1201119292922'
     seed2 = b'The_secret_is_uncool_12011192929'
-    (pk1, rho1), secret1 = generate_keys(seed1)
-    (pk2, rho2), secret2 = generate_keys(seed2)
-
-    assert pk1 != pk2
+    pk1, secret1 = generate_keys(seed1)
+    (t1, rho1) = pk1.to_tuple()
+    pk2, secret2 = generate_keys(seed2)
+    (t2, rho2) = pk2.to_tuple()
+    
+    assert t1 != t2
     assert rho1 != rho2
     assert secret1 != secret2
 
@@ -53,3 +58,10 @@ def test_modular_distance():
     mod_dist = modular_distance([0, 1, Q -1], [0, Q-1, 1])
     assert all(num >= 0 for num in mod_dist)
     assert all([num <= ETA for num in mod_dist])
+
+def test_sending_secret():
+    pk, sk = generate_keys() # using random key
+    encapesed_key = encapes(pk)
+    assert len(encapesed_key.shared_key) == 32
+    assert len(encapesed_key.cypher_text.u) == 3
+

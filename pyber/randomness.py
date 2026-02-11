@@ -1,4 +1,4 @@
-from hashlib import shake_128, shake_256, sha3_512
+from hashlib import sha3_256, shake_128, shake_256, sha3_512
 import secrets
 from pyber.params import ETA, N, Q
 
@@ -62,7 +62,11 @@ def g_hash_function(data: None|bytes=None) -> tuple[bytes, bytes]:
     """
     if not data:
         data = secrets.token_bytes(32)
-    if len(data) != 32:
-        raise Exception("Must be 256 bits long")
     digest = sha3_512(data).digest()
     return digest[:32], digest[32:]
+
+def h_hash_function(data: bytes):
+    return sha3_256(data).digest()
+
+def j_hash_function(data: bytes):
+    return shake_256(data).digest(32)
