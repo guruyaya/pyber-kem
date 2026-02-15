@@ -38,3 +38,16 @@ def decode_polynom(encoded: list[int]) -> Polynomial:
     for params in windowed(encoded, 3, step=3):
         coeffs += list(decode_12(*params))
     return Polynomial(coeffs)
+
+def decode_1(byte_list: bytes) -> list[int]:
+    out = []
+    for byte in byte_list:
+        for i in range(8):
+            out.append(int((byte >> i) & 1))
+    return out
+
+def encode_1(bits: list[int]) -> bytes:
+    out:bytes = b''
+    for byte_in_bits in windowed(bits, 8, 0, step=8):
+        out += bytes([sum ( b*2**i for i,b in enumerate(byte_in_bits) )])
+    return out

@@ -30,26 +30,26 @@ def test_polynomial_invalid_length():
         Polynomial([1, 2, 3]) # Too few coefficients
 
 def test_add_polynomial():
-    a = Polynomial([num for num in range(256)])
-    b = Polynomial([num * 100 for num in range(256)])
+    a = Polynomial([num for num in range(N)])
+    b = Polynomial([num * 100 for num in range(N)])
 
     c = a + b
-    assert c.coeffs == [(num * 101) % Q for num in range(256)]
+    assert c.coeffs == [(num * 101) % Q for num in range(N)]
 
 def test_sub_polynomial():
-    a = Polynomial([num for num in range(256)])
-    b = Polynomial([num * 20 for num in range(256)])
+    a = Polynomial([num for num in range(N)])
+    b = Polynomial([num * 20 for num in range(N)])
 
     c = a - b
-    assert c.coeffs == [(num * -19) % Q for num in range(256)]
+    assert c.coeffs == [(num * -19) % Q for num in range(N)]
 
 def test_mul_polynomial():
-    a = Polynomial(([0] * 255) + [1])
-    b = Polynomial([0, 1] + ([0] * 254))
+    a = Polynomial(([0] * (N-1)) + [1])
+    b = Polynomial([0, 1] + ([0] * (N-2)))
 
     c = a * b
-    assert len(c.coeffs) == 256 
-    assert c.coeffs == [3328,] + ([0,] * 255)
+    assert len(c.coeffs) == N 
+    assert c.coeffs == [3328,] + ([0,] * (N-1))
 
     d = b * a
     assert c.coeffs == d.coeffs

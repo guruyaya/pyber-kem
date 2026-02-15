@@ -56,6 +56,9 @@ class Polynomial:
     def __str__(self):
         return f"<Polynomial ({self.coeffs})>"
         
+    def __repr__(self):
+        return self.__str__()
+    
     def __iter__(self) -> iter:
         return iter(self.coeffs)
     

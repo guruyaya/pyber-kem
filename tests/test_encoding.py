@@ -1,5 +1,5 @@
 import pytest
-from pyber.encoding import decode_polynom, encode_12, decode_12, encode_polynom
+from pyber.encoding import decode_1, decode_polynom, encode_1, encode_12, decode_12, encode_polynom
 from pyber.params import N
 from pyber.polynomial import Polynomial
 
@@ -58,3 +58,11 @@ def test_encode_polynom():
 def test_enocde_deocde_polynom_round_trip():
     polynom = Polynomial(list(range(N)))
     assert decode_polynom(encode_polynom(polynom)) == polynom
+
+def test_encode_decode_1_round_trip():
+    m = b'\xFF\x00\xAA'
+    ones = decode_1(m)
+    assert ones == [1,1,1,1, 1,1,1,1, 0,0,0,0, 0,0,0,0, 0,1,0,1, 0,1,0,1]
+
+    back = encode_1(ones)
+    assert back == m

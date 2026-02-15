@@ -53,7 +53,7 @@ def generate_noise(seed: bytes, nonce: int, eta: int = 2) -> list[int]:
         coeffs.append(d1)
         coeffs.append(d2)
         
-    return coeffs
+    return coeffs[:N]
 
 def g_hash_function(data: None|bytes=None) -> tuple[bytes, bytes]:
     """
